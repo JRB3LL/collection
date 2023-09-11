@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+$db = new PDO('mysql:host=db; dbname=lower_deck_charaters', 'root', 'password');
+
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +31,13 @@
 
 <body>
 
-<h1>Website Template</h1>
+    <h1>Star Trek Lower Decks</h1>
+
+    <div>
+        <a href="DisplayAllCharacters.php">Characters</a>
+        <a href="AddCharacters.php">Add Character</a>
+        <a href="RestoreDeletedCharacters.php">Deleted characters</a>
+    </div>
 
 </body>
 </html>

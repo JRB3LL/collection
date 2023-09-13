@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'src/Character.php';
 
 class CharacterData

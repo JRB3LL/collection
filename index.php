@@ -27,7 +27,7 @@
 
     <div>
         <a href="DisplayAllCharacters.php">Characters</a>
-        <a href="AddCharacters.php">Add Character</a>
+        <a href="AddCharacter.php">Add Character</a>
         <a href="RestoreDeletedCharacters.php">Deleted characters</a>
     </div>
 

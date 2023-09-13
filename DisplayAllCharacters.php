@@ -21,6 +21,8 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     <h2>Characters</h2>
 
+    <a href="index.php">Back</a>
+
     <?php
 
     $model = new CharacterData($db);
@@ -33,6 +35,7 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         echo '<li>' . $characterData->name . '</li>';
         echo '<li>' . $characterData->species . '</li>';
         echo '<li>' . $characterData->rank . '</li>';
+        echo '<a href="RestoreDeletedCharacters.php">Delete</a>';
         echo '</div>';
     }
 

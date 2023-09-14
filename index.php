@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +23,14 @@
 
 <body>
 
-<h1>Website Template</h1>
+    <h1>Star Trek Lower Decks</h1>
+
+    <div>
+        <a href="DisplayAllCharacters.php">Characters</a>
+        <a href="AddCharacter.php">Add Character</a>
+        <a href="RestoreDeletedCharacters.php">Deleted characters</a>
+    </div>
 
 </body>
+
 </html>

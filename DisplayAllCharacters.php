@@ -21,6 +21,8 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     <h2>Characters</h2>
 
+    <a href="index.php">Back</a>
+
     <?php
 
     $model = new CharacterData($db);

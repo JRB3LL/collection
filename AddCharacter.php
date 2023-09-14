@@ -1,5 +1,7 @@
 <?php
 
+require_once 'src/CharacterData.php';
+
 $db = new PDO('mysql:host=db; dbname=lower_deck_charaters', 'root', 'password');
 
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -16,47 +18,36 @@ if (
     $characterImage
 ) {
 
+    $valid = true;
+
     if (strlen($characterName) > 150) {
-        echo "Field exceeds maximum length 150.";
-    } else {
-        return true;
+        $nameError = "Field exceeds maximum length 150.";
+        $valid = false; // Repeat this change for each of the validation checks
     }
 
     if (strlen($characterSpecies) > 150) {
-        echo "Field exceeds maximum length 150.";
-    } else {
-        return true;
+        $speciesError = "Field exceeds maximum length 150.";
+        $valid = false;
     }
 
     if (strlen($characterRank) > 150) {
-        echo "Field exceeds maximum length 150.";
-    } else {
-        return true;
+        $rankError = "Field exceeds maximum length 150.";
+        $valid = false;
     }
 
     if (strlen($characterImage) > 10000) {
-        echo "Field exceeds maximum length 10000.";
-    } else {
-        return true;
+        $imageError = "Field exceeds maximum length 10000.";
+        $vaild = false;
     }
 
-    $characterDataQuery = $db->prepare(
-        "INSERT INTO `characters`
-        (`name`,`species`, `rank`, `image`)
-        VALUE (:name, :species, :rank, :image)"
-    );
+    $characterDataQuery = new CharacterData($db);
 
-    $characterDataQuery->bindParam('name', $characterName);
-    $characterDataQuery->bindParam('species', $characterSpecies);
-    $characterDataQuery->bindParam('rank', $characterRank);
-    $characterDataQuery->bindParam('image', $characterImage);
-
-    $characterSaved = $characterDataQuery->execute();
+    $characterSaved = $characterDataQuery->sendCharacterData($characterName, $characterSpecies, $characterRank, $characterImage);
 
     if ($characterSaved === true) {
         header('Location: DisplayAllCharacters.php');
     } else {
-        echo "Character details are not complete, Please try again.";
+        $inputError = "Character details are not complete, Please try again.";
     }
 }
 
@@ -75,16 +66,50 @@ if (
 
     <h2>Add Character</h2>
 
+    <a href="index.php">Back</a>
+
     <form method="POST">
+
+        <?php
+        if (isset($inputError)) {
+            echo $inputError;
+        }
+        ?>
+
         <label for="name">Name</label>
+        <?php
+        if (isset($nameError)) {
+            echo $nameError;
+        }
+        ?>
         <input type="text" name="name" id="name" /></br>
+
         <label for="species">Species</label>
+        <?php
+        if (isset($speciesError)) {
+            echo $speciesError;
+        }
+        ?>
         <input type="text" name="species" id="species" /></br>
+
         <label for="rank">Rank</label>
+        <?php
+        if (isset($rankError)) {
+            echo $rankError;
+        }
+        ?>
         <input type="text" name="rank" id="rank" /></br>
+
         <label for="image">Image URL</label>
+        <?php
+        if (isset($imageError)) {
+            echo $imageError;
+        }
+        ?>
         <input type="text" name="image" id="image" /></br>
+
         <input type="submit" />
+
         <a href="index.php">Back</a>
     </form>
 

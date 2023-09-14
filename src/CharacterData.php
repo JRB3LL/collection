@@ -35,4 +35,20 @@ class CharacterData
 
         return $characters;
     }
+
+    public function sendCharacterData($characterName, $characterSpecies, $characterRank, $characterImage)
+    {
+        $characterDataQuery = $this->db->prepare(
+            "INSERT INTO `characters`
+            (`name`,`species`, `rank`, `image`)
+            VALUE (:name, :species, :rank, :image)"
+        );
+
+        $characterDataQuery->bindParam('name', $characterName);
+        $characterDataQuery->bindParam('species', $characterSpecies);
+        $characterDataQuery->bindParam('rank', $characterRank);
+        $characterDataQuery->bindParam('image', $characterImage);
+
+        return $characterDataQuery->execute();
+    }
 }

@@ -16,8 +16,8 @@ class CharacterData
     public function getCharacterData()
     {
         $characterDataQuery = $this->db->prepare(
-            "SELECT `name`, `species`, `rank`, `image` 
-                FROM `characters`;"
+            "SELECT `name`, `species`, `rank`, `image`, `deleted` 
+                FROM `characters` WHERE `deleted` = 0;"
         );
 
         $characterDataQuery->execute();

@@ -11,43 +11,45 @@ $characterSpecies = $_POST['species'] ?? false;
 $characterRank = $_POST['rank'] ?? false;
 $characterImage = $_POST['image'] ?? false;
 
+
 if (
     $characterName &&
     $characterSpecies &&
     $characterRank &&
     $characterImage
 ) {
-
     $valid = true;
 
     if (strlen($characterName) > 150) {
-        $nameError = "Field exceeds maximum length 150.";
-        $valid = false; // Repeat this change for each of the validation checks
+        $nameError = "<br />Field exceeds maximum length 150.<br />";
+        $valid = false;
     }
 
     if (strlen($characterSpecies) > 150) {
-        $speciesError = "Field exceeds maximum length 150.";
+        $speciesError = "<br />Field exceeds maximum length 150.<br />";
         $valid = false;
     }
 
     if (strlen($characterRank) > 150) {
-        $rankError = "Field exceeds maximum length 150.";
+        $rankError = "<br />Field exceeds maximum length 150.<br />";
         $valid = false;
     }
 
-    if (strlen($characterImage) > 10000) {
-        $imageError = "Field exceeds maximum length 10000.";
+    if (strlen($characterImage) > 1000) {
+        $imageError = "<br />Field exceeds maximum length 1000.<br />";
         $vaild = false;
     }
 
-    $characterDataQuery = new CharacterData($db);
-
-    $characterSaved = $characterDataQuery->sendCharacterData($characterName, $characterSpecies, $characterRank, $characterImage);
-
-    if ($characterSaved === true) {
-        header('Location: DisplayAllCharacters.php');
-    } else {
-        $inputError = "Character details are not complete, Please try again.";
+    if ($valid) {
+        $characterDataQuery = new CharacterData($db);
+        $characterSaved = $characterDataQuery->sendCharacterData($characterName, $characterSpecies, $characterRank, $characterImage);
+        if ($characterSaved === true) {
+            header('Location: DisplayAllCharacters.php');
+        }
+    }
+} else {
+    if (isset($_POST['name'])) {
+        $inputError = "Character details are not complete, Please try again.<br /><br />";
     }
 }
 
@@ -66,7 +68,7 @@ if (
 
     <h2>Add Character</h2>
 
-    <a href="index.php">Back</a>
+    <a href="index.php">Back</a><br /><br />
 
     <form method="POST">
 
@@ -82,7 +84,7 @@ if (
             echo $nameError;
         }
         ?>
-        <input type="text" name="name" id="name" /></br>
+        <input type="text" name="name" id="name" /><br /><br />
 
         <label for="species">Species</label>
         <?php
@@ -90,7 +92,7 @@ if (
             echo $speciesError;
         }
         ?>
-        <input type="text" name="species" id="species" /></br>
+        <input type="text" name="species" id="species" /><br /><br />
 
         <label for="rank">Rank</label>
         <?php
@@ -98,7 +100,7 @@ if (
             echo $rankError;
         }
         ?>
-        <input type="text" name="rank" id="rank" /></br>
+        <input type="text" name="rank" id="rank" /><br /><br />
 
         <label for="image">Image URL</label>
         <?php
@@ -106,11 +108,10 @@ if (
             echo $imageError;
         }
         ?>
-        <input type="text" name="image" id="image" /></br>
+        <input type="text" name="image" id="image" /><br /><br />
 
         <input type="submit" />
 
-        <a href="index.php">Back</a>
     </form>
 
 </body>

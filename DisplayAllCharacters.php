@@ -35,6 +35,7 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         echo '<li>' . $characterData->name . '</li>';
         echo '<li>' . $characterData->species . '</li>';
         echo '<li>' . $characterData->rank . '</li>';
+        echo '<a href="DeleteCharacter.php?id=' . $characterData->id . '">Delete</a>';
         echo '</div>';
     }
 

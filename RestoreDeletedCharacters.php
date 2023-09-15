@@ -1,3 +1,13 @@
+<?php
+
+require_once 'src/CharacterData.php';
+
+$db = new PDO('mysql:host=db; dbname=lower_deck_charaters', 'root', 'password');
+
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +18,25 @@
 <body>
     <h2>Deleted Characters</h2>
 
-
     <a href="index.php">Back</a>
+
+    <?php
+
+    $model = new CharacterData($db);
+
+    $data = $model->getDeletedCharacterData();
+
+    foreach ($data as $characterData) {
+        echo '<div>';
+        echo '<img src="' . $characterData->image . '" width="200" height="200">';
+        echo '<li>' . $characterData->name . '</li>';
+        echo '<li>' . $characterData->species . '</li>';
+        echo '<li>' . $characterData->rank . '</li>';
+        // echo '<a href="RestoreDeletedCharacters.php">Delete</a>';
+        echo '</div>';
+    }
+
+    ?>
+
 </body>
 </html>

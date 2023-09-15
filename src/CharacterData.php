@@ -16,7 +16,7 @@ class CharacterData
     public function getCharacterData()
     {
         $characterDataQuery = $this->db->prepare(
-            "SELECT `name`, `species`, `rank`, `image`, `deleted` 
+            "SELECT `id`, `name`, `species`, `rank`, `image`, `deleted` 
                 FROM `characters` WHERE `deleted` = 0;"
         );
 
@@ -27,6 +27,7 @@ class CharacterData
         foreach ($data as $characterData)
 
             $characters[] = new Character(
+                $characterData['id'],
                 $characterData['name'],
                 $characterData['species'],
                 $characterData['rank'],
@@ -34,6 +35,30 @@ class CharacterData
             );
 
         return $characters;
+    }
+
+    public function getDeletedCharacterData()
+    {
+        $deletedCharacterDataQuery = $this->db->prepare(
+            "SELECT `id`, `name`, `species`, `rank`, `image`, `deleted` 
+                FROM `characters` WHERE `deleted` = 1;"
+        );
+
+        $deletedCharacterDataQuery->execute();
+
+        $data = $deletedCharacterDataQuery->fetchAll();
+
+        foreach ($data as $characterData)
+
+            $deletedCharacters[] = new Character(
+                $characterData['id'],
+                $characterData['name'],
+                $characterData['species'],
+                $characterData['rank'],
+                $characterData['image']
+            );
+
+        return $deletedCharacters;
     }
 
     public function sendCharacterData($characterName, $characterSpecies, $characterRank, $characterImage)
@@ -50,5 +75,17 @@ class CharacterData
         $characterDataQuery->bindParam('image', $characterImage);
 
         return $characterDataQuery->execute();
+    }
+
+    public function softDelete($id) {
+        $updateData = "UPDATE characters SET deleted = 1 WHERE id = :id";
+        $updatedInput = $this->db->prepare($updateData);
+        $updatedInput->bindParam("id", $id);
+
+        if ($updatedInput->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
